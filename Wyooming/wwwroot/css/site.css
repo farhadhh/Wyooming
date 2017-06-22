@@ -181,7 +181,7 @@ footer {
 .Rent {
   position: relative;
   width: 100%;
-  min-height: 1096px;
+  min-height: 780px;
   background: url("../images/apartments.jpg") no-repeat;
   margin: 10px auto; }
 
@@ -192,7 +192,7 @@ footer {
   width: 90%;
   left: 50%;
   margin-left: -20%;
-  margin-top: -20%;
+  margin-top: -10%;
   top: 50%;
   padding: 15px;
   text-align: center; }
