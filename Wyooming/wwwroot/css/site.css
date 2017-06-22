@@ -1,0 +1,143 @@
+body {
+  margin: 0 auto;
+  min-width: 400px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 14px; }
+
+input {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; }
+
+img {
+  border-radius: 7px; }
+
+a {
+  text-decoration: none; }
+
+.container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto; }
+
+.header {
+  background-color: white;
+  padding: 10px 0; }
+
+.headerContent {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto; }
+
+.logo {
+  float: right; }
+
+.topHeader {
+  color: #828080; }
+
+.topHeader a {
+  color: #828080; }
+
+.topHeader a:hover {
+  color: red; }
+
+.welcomLogin {
+  float: left;
+  margin-right: 3%; }
+
+.register {
+  margin-right: 3%;
+  float: left; }
+
+.searchHeader {
+  margin-top: 2%;
+  margin-bottom: 2%; }
+
+.CartHeaderDiv {
+  background-color: mediumseagreen;
+  float: left;
+  padding: 11px;
+  margin-right: 3%;
+  border-radius: 3px; }
+
+.CartHeaderDiv label {
+  background-color: limegreen;
+  padding: 2px 5px;
+  border-radius: 50%; }
+
+.CartHeaderDiv a {
+  color: white; }
+
+.SearchTool input {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border: 1px solid;
+  border-color: #828080;
+  max-width: 420px;
+  width: 90%;
+  padding: 10px;
+  float: left; }
+
+.SearchTool button {
+  cursor: pointer; }
+
+.searchIcon {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  border: none;
+  height: 38px;
+  padding-left: 12px;
+  padding-right: 12px;
+  background-color: #828080;
+  color: white; }
+
+.headerMenus {
+  padding: 5px 0;
+  background: #f7f8fa;
+  width: 100%; }
+
+.MenuItems {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto; }
+
+.MenuItems nav {
+  padding: 5px 0; }
+
+.MenuItems a {
+  color: #504e4e; }
+
+.MenuItems i {
+  padding: 0 5px; }
+
+.MenuItem {
+  margin-right: 10px; }
+
+.FirstImg {
+  margin-bottom: 10px; }
+
+.container {
+  max-width: 960px; }
+
+.middleWare {
+  float: left;
+  margin-right: 10px; }
+
+footer {
+  margin-top: 10px; }
+
+.footerContent {
+  max-width: 960px;
+  margin: 0 auto; }
+
+.footerUpperContent {
+  background: #828080;
+  color: white;
+  padding: 15px 2px; }
+
+.footerUpperContent label {
+  margin-right: 30px; }
+
+.footerMiddleContent {
+  background: #f7f8fa;
+  padding: 30px 0; }
+
+/*# sourceMappingURL=Site.css.map */
