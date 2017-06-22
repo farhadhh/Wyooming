@@ -1,0 +1,279 @@
+$Darker_Color : #828080;
+$Lighter_Color: #f7f8fa;
+
+
+body{
+    margin: 0 auto;
+    min-width: 400px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1;
+}
+
+input{
+     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+     max-width: 300px;
+}
+
+
+img{
+    border-radius: 7px;
+}
+
+a{ 
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+label{
+    font-weight:300;
+    margin-bottom: 0;
+}
+
+.Mycontainer{
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.header{
+    
+    background-color: white;
+    padding:10px 0;
+}
+
+
+.headerContent{
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+
+.logo{
+    float: right;
+}
+
+.topHeader{
+        color: $Darker_Color;
+}
+.topHeader a{
+    color:$Darker_Color;
+}
+
+.topHeader a:hover{
+    color: red;
+}
+
+.welcomLogin{
+    float: left;
+    margin-right: 3%;
+}
+
+.register{
+    margin-right: 3%;
+    float: left;
+}
+
+.searchHeader{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+
+.CartHeaderDiv{
+    background-color: mediumseagreen;
+    float: left;
+    padding: 9px;
+    margin-right: 3%;
+    border-radius: 3px;
+    line-height: 17px;
+
+}
+.CartHeaderDiv label{
+    background-color: limegreen;
+    padding:2px 5px;
+    border-radius: 50%;
+}
+.CartHeaderDiv a{
+        color: white;
+}
+
+
+.SearchTool input{
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border: 1px solid; 
+    border-color: $Darker_Color;
+    max-width: 420px;
+    width: 90%;
+    padding: 10px;
+	line-height: 17px;
+    float: left;
+}
+
+.SearchTool button{
+    cursor: pointer;
+}
+
+.searchIcon{
+
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border:none;
+    line-height: 17px;
+    padding: 11px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: $Darker_Color;
+    color: white;
+}
+
+.headerMenus{
+    padding: 5px 0;
+      background: $Lighter_Color;
+    width: 100%;
+}
+
+.MenuItems{
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+}
+.MenuItems nav{
+    padding: 5px 0;
+}
+.MenuItems a{
+    color: #504e4e;
+}
+.MenuItems i{
+    padding: 0 5px;
+}
+
+.MenuItem{
+    margin-right: 10px;
+}
+
+.FirstImg{
+    margin-bottom: 10px;
+}
+
+.container{
+    max-width: 960px;
+}
+
+.middleWare{
+    float: left;
+    margin-right: 10px;
+}
+
+footer{
+
+    margin-top: 10px;
+}
+
+.footerContent{
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.footerUpperContent{
+        background: $Darker_Color;
+    color: white;
+    padding: 15px 2px;
+}
+
+.footerUpperContent label{
+    margin-right: 30px;
+}
+
+.footerMiddleContent{
+    background: $Lighter_Color;
+    padding: 30px 0;
+}
+
+.carousel-inner .item img{
+    height: 380px;
+}
+
+.carousel-indicators{
+    position: absolute;
+    list-style: none;
+    z-index: 1;
+    width: 100%;
+    font-size: 20px;
+    top:340px;
+    padding-left: 0;
+    color: white;
+}
+
+.carousel-indicators li{
+    float: left;
+    padding: 10px 25px;
+    width:33.3333333334%;
+    text-align: center;
+    cursor: pointer;
+     background:  #38344e;
+     box-shadow: 2px -1px 5px;
+}
+
+.carousel-indicators .active{
+    background:white;
+    color: black;
+}
+
+.Rent{
+    position: relative;
+    width: 100%;
+    min-height: 1096px;
+    background: url("../images/apartments.jpg") no-repeat;
+    margin: 10px auto;
+}
+
+.RentForm{
+    background: rgba(0, 0, 0, 0.6);
+    max-width: 680px;
+    position: absolute;
+    width:90%;
+    left: 50%;
+    margin-left: -20%;
+    margin-top: -20%;
+    top: 50%;
+    padding: 15px;
+    text-align: center;
+}
+
+.RentForm h3{
+    color: white;
+}
+
+.RentForm .textinput{
+    float: left;
+    margin: 5px;
+    
+}
+
+.RentForm .buttonInput{
+    margin: 5px;
+    margin-left: 25px;
+    float: left;
+}
+.RentForm .buttonInput input{
+        padding: 11px 22px;
+        background-color: darkorange;
+        border:none;
+        border-radius: 3px;
+        font-size: 18px;
+        color:white;
+}
+
+.RentForm .textinput input{
+    padding: 5px;
+    border-radius: 2px;
+    border: none;
+    line-height: 30px;
+}
