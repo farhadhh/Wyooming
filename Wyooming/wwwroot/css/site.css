@@ -187,7 +187,7 @@ footer {
 
 .RentForm {
   background: rgba(0, 0, 0, 0.6);
-  max-width: 680px;
+  max-width: 580px;
   position: absolute;
   width: 90%;
   left: 50%;
@@ -198,11 +198,15 @@ footer {
   text-align: center; }
 
 .RentForm h3 {
-  color: white; }
+  color: white;
+  text-align: center; }
 
 .RentForm .textinput {
-  float: left;
   margin: 5px; }
+
+.CityInput {
+  max-width: 500px;
+  width: 500px; }
 
 .RentForm .buttonInput {
   margin: 5px;
@@ -222,5 +226,11 @@ footer {
   border-radius: 2px;
   border: none;
   line-height: 30px; }
+
+.subform {
+  margin: 0 7%; }
+
+.RentForm .subform .textinput {
+  float: left; }
 
 /*# sourceMappingURL=site.css.map */

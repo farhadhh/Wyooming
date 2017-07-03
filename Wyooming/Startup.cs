@@ -12,6 +12,10 @@ using Microsoft.Extensions.Logging;
 using Wyooming.Data;
 using Wyooming.Models;
 using Wyooming.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Wyooming.Authorization;
 
 namespace Wyooming
 {
@@ -41,7 +45,7 @@ namespace Wyooming
         {
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("WyoomingConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -49,9 +53,40 @@ namespace Wyooming
 
             services.AddMvc();
 
+
+            // Authorization handlers.
+            services.AddScoped<IAuthorizationHandler,
+                ContactIsOwnerAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler,
+                ContactManagerAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler,
+                ContactAdministratorsAuthorizationHandler>();
+
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddDbContext<WyoomingContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("WyoomingConnection")));
+
+
+            //        var skipSSL = Configuration.GetValue<bool>("LocalTest:skipSSL");
+
+            //        services.Configure<MvcOptions>(options =>
+            //        {
+            //            if(_hostingEnv.IsDevelopment() && !skipSSL)
+            //{
+            //                options.Filters.Add(new RequireHttpsAttribute());
+            //            }
+            //        });
+
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +112,8 @@ namespace Wyooming
 
             app.UseIdentity();
 
+            var testUserPw = Configuration["SeedUserPw"];
+
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
@@ -85,6 +122,17 @@ namespace Wyooming
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            try
+            {
+                seedData.Initialize(app.ApplicationServices, "").Wait();
+            }
+            catch
+            {
+                throw new System.Exception("You need to update the DB "
+                    + "\nPM > Update-Database " + "\n or \n" +
+                      "> dotnet ef database update"
+                      + "\nIf that doesn't work, comment out SeedData and register a new user");
+            }
         }
     }
 }

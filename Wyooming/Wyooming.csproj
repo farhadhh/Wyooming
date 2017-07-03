@@ -12,6 +12,10 @@
     <UserSecretsId>aspnet-Wyooming-37a0477c-27ab-4bf9-970f-929b979eb3e4</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <UserSecretsId>My-USER-SECRET-ID-HERE-c23d27a4-eb88</UserSecretsId>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Include="wwwroot\awe.html" />
     <Content Include="wwwroot\css\ionicons.css" />
@@ -47,6 +51,9 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0-msbuild3-final" />
   </ItemGroup>
 
 </Project>

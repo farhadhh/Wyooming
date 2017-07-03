@@ -236,7 +236,7 @@ footer{
 
 .RentForm{
     background: rgba(0, 0, 0, 0.6);
-    max-width: 680px;
+    max-width: 580px;
     position: absolute;
     width:90%;
     left: 50%;
@@ -249,12 +249,18 @@ footer{
 
 .RentForm h3{
     color: white;
+    text-align: center;
 }
 
 .RentForm .textinput{
-    float: left;
+
     margin: 5px;
     
+}
+
+.CityInput{
+    max-width: 500px;
+    width: 500px;
 }
 
 .RentForm .buttonInput{
@@ -262,6 +268,7 @@ footer{
     margin-left: 25px;
     float: left;
 }
+
 .RentForm .buttonInput input{
         padding: 11px 22px;
         background-color: darkorange;
@@ -277,3 +284,13 @@ footer{
     border: none;
     line-height: 30px;
 }
+
+.subform{
+    margin: 0 7%;
+
+}
+
+.RentForm .subform .textinput{
+    float: left;
+}
+
