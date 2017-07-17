@@ -51,6 +51,8 @@ namespace Wyooming
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            var _testSecret = Configuration["MySecret"];
+
             services.AddMvc();
 
 
@@ -70,15 +72,15 @@ namespace Wyooming
                     options.UseSqlServer(Configuration.GetConnectionString("WyoomingConnection")));
 
 
-            //        var skipSSL = Configuration.GetValue<bool>("LocalTest:skipSSL");
+                    var skipSSL = Configuration.GetValue<bool>("LocalTest:skipSSL");
 
-            //        services.Configure<MvcOptions>(options =>
-            //        {
-            //            if(_hostingEnv.IsDevelopment() && !skipSSL)
-            //{
-            //                options.Filters.Add(new RequireHttpsAttribute());
-            //            }
-            //        });
+                   services.Configure<MvcOptions>(options =>
+                    {
+                        if(!skipSSL)
+            {
+                            options.Filters.Add(new RequireHttpsAttribute());
+                        }
+                    });
 
             services.AddMvc(config =>
             {
@@ -112,7 +114,13 @@ namespace Wyooming
 
             app.UseIdentity();
 
-            var testUserPw = Configuration["SeedUserPw"];
+            var testUserPw = Configuration["MySecret"];
+            if (String.IsNullOrEmpty(testUserPw))
+            {
+                throw new System.Exception("Use secrets manager to set SeedUserPW \n" +
+                                           "dotnet user-secrets set SeedUserPW <pw>");
+            }
+
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
@@ -122,9 +130,11 @@ namespace Wyooming
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
             try
             {
-                seedData.Initialize(app.ApplicationServices, "").Wait();
+                seedData.Initialize(app.ApplicationServices, testUserPw).Wait();
             }
             catch
             {

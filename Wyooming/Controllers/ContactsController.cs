@@ -9,6 +9,7 @@ using Wyooming.Data;
 using Wyooming.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Wyooming.Authorization;
 
 namespace Wyooming.Controllers
 {
@@ -54,23 +55,38 @@ namespace Wyooming.Controllers
         // GET: Contacts/Create
         public IActionResult Create()
         {
+
             return View();
         }
+
+
 
         // POST: Contacts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,OwnerID,Name,Address,City,State,Zip,Email,Status")] Contact contact)
+        public async Task<IActionResult> Create(ContactEditViewModel editModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(contact);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return View(editModel);
+                
             }
-            return View(contact);
+
+            var contact = ViewModel_to_model(new Contact(), editModel);
+            contact.OwnerID = _userManager.GetUserId(User);
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact, ContactOperations.Create);
+
+            if (!isAuthorized)
+            {
+                return new ChallengeResult();
+            }
+
+            _context.Add(contact);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         // GET: Contacts/Edit/5
@@ -86,7 +102,16 @@ namespace Wyooming.Controllers
             {
                 return NotFound();
             }
-            return View(contact);
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact, ContactOperations.Update);
+
+            if (!isAuthorized)
+            {
+                return new ChallengeResult();
+            }
+                
+            var editModel = Model_to_viewModel(contact);
+
+            return View(editModel);
         }
 
         // POST: Contacts/Edit/5
@@ -94,34 +119,39 @@ namespace Wyooming.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,OwnerID,Name,Address,City,State,Zip,Email,Status")] Contact contact)
+        public async Task<IActionResult> Edit(int id, ContactEditViewModel editModel)
         {
-            if (id != contact.ContactId)
+            if (!ModelState.IsValid)
+            {
+                return View(editModel);
+            }
+            var contact = await _context.Contact.SingleOrDefaultAsync(m => m.ContactId == id);
+            if (contact == null)
             {
                 return NotFound();
             }
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact, ContactOperations.Update);
 
-            if (ModelState.IsValid)
+            if (!isAuthorized)
             {
-                try
-                {
-                    _context.Update(contact);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ContactExists(contact.ContactId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
+                return new ChallengeResult();
             }
-            return View(contact);
+
+            contact = ViewModel_to_model(contact, editModel);
+            if (contact.Status == ContactStatus.Approved)
+            {
+                var canApprove = await _authorizationService.AuthorizeAsync(User, contact, ContactOperations.Approve);
+
+                if (!canApprove)
+                {
+                    contact.Status = ContactStatus.Submitted;
+                }
+            }
+
+            _context.Update(contact);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Contacts/Delete/5
@@ -139,6 +169,13 @@ namespace Wyooming.Controllers
                 return NotFound();
             }
 
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
+                                ContactOperations.Delete);
+            if (!isAuthorized)
+            {
+                return new ChallengeResult();
+            }
+
             return View(contact);
         }
 
@@ -148,9 +185,44 @@ namespace Wyooming.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var contact = await _context.Contact.SingleOrDefaultAsync(m => m.ContactId == id);
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, contact,
+                                        ContactOperations.Delete);
+            if (!isAuthorized)
+            {
+                return new ChallengeResult();
+            }
+
             _context.Contact.Remove(contact);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        private Contact ViewModel_to_model(Contact contact, ContactEditViewModel editModel)
+        {
+            contact.Address = editModel.Address;
+            contact.City = editModel.City;
+            contact.Email = editModel.Email;
+            contact.Name = editModel.Name;
+            contact.State = editModel.State;
+            contact.Zip = editModel.Zip;
+
+            return contact;
+        }
+
+        private ContactEditViewModel Model_to_viewModel(Contact contact)
+        {
+            var editModel = new ContactEditViewModel();
+
+            editModel.ContactId = contact.ContactId;
+            editModel.Address = contact.Address;
+            editModel.City = contact.City;
+            editModel.Email = contact.Email;
+            editModel.Name = contact.Name;
+            editModel.State = contact.State;
+            editModel.Zip = contact.Zip;
+
+            return editModel;
         }
 
         private bool ContactExists(int id)
